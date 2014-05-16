@@ -1,9 +1,9 @@
-from django.core.cache import cache
 from django.shortcuts import render_to_response
 from django.views.decorators.cache import never_cache
 
-from waffle import (flag_is_active, sample_is_active, FLAGS_ALL_CACHE_KEY,
-                    SWITCHES_ALL_CACHE_KEY, SAMPLES_ALL_CACHE_KEY)
+from waffle import (cache, flag_is_active, sample_is_active,
+                    FLAGS_ALL_CACHE_KEY, SWITCHES_ALL_CACHE_KEY,
+                    SAMPLES_ALL_CACHE_KEY)
 from waffle.models import Flag, Sample, Switch
 
 

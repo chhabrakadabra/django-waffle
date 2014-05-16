@@ -2,7 +2,7 @@ from decimal import Decimal
 import random
 
 from django.conf import settings
-from django.core.cache import cache
+from django.core.cache import get_cache
 from django.db.models.signals import post_save, post_delete, m2m_changed
 
 from waffle.models import Flag, Sample, Switch
@@ -22,6 +22,11 @@ SWITCH_CACHE_KEY = u'waffle:switch:{n}'
 SWITCHES_ALL_CACHE_KEY = u'waffle:switches:all'
 COOKIE_NAME = getattr(settings, 'WAFFLE_COOKIE', 'dwf_%s')
 
+WAFFLE_CACHE_ALIAS = getattr(settings, 'WAFFLE_CACHE_ALIAS', None)
+if WAFFLE_CACHE_ALIAS is not None:
+    cache = get_cache(WAFFLE_CACHE_ALIAS)
+else:
+    from django.core.cache import cache
 
 def flag_is_active(request, flag_name):
     flag = cache.get(FLAG_CACHE_KEY.format(n=flag_name))
