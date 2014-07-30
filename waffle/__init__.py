@@ -40,10 +40,10 @@ def flag_is_active(request, flag_name):
             cache_flag(instance=flag)
         except Flag.DoesNotExist:
             logger.warning(
-                'Flag {flag_name} does not exist in DB but is being queried '
-                'by the application'.format(
-                    flag_name=flag_name
-                ))
+                'Flag %s does not exist in DB but is being queried '
+                'by the application',
+                flag_name
+            )
             return getattr(settings, 'WAFFLE_DEFAULT', False)
 
     if getattr(settings, 'WAFFLE_OVERRIDE', False):
@@ -106,10 +106,10 @@ def switch_is_active(switch_name):
             cache_switch(instance=switch)
         except Switch.DoesNotExist:
             logger.warning(
-                'Switch {switch_name} does not exist in DB but is being '
-                'queried by the application'.format(
-                    switch_name=switch_name
-                ))
+                'Switch %s does not exist in DB but is being '
+                'queried by the application',
+                switch_name
+            )
             return False
 
     return switch.active
@@ -123,10 +123,10 @@ def sample_is_active(sample_name):
             cache_sample(instance=sample)
         except Sample.DoesNotExist:
             logger.warning(
-                'Sample {sample_name} does not exist in DB but is being '
-                'queried by the application'.format(
-                    sample_name=sample_name
-                ))
+                'Sample %s does not exist in DB but is being '
+                'queried by the application',
+                sample_name
+            )
             return False
 
     return Decimal(str(random.uniform(0, 100))) <= sample.percent
